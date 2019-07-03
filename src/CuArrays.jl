@@ -53,7 +53,7 @@ libcudnn !== nothing    && include("dnn/CUDNN.jl")
 
 include("nnlib.jl")
 
-include("deprecated.jl")
+# include("deprecated.jl")
 
 function __init__()
     if !configured
@@ -92,9 +92,16 @@ function __init__()
     push!(CUDAnative.device!_listeners, callback)
 
     # a device might be active already
-    existing_ctx = CUDAdrv.CuCurrentContext()
-    if existing_ctx !== nothing
-        active_context[] = existing_ctx
+    try
+        existing_ctx = CUDAdrv.CuCurrentContext()
+        if existing_ctx !== nothing
+            active_context[] = existing_ctx
+        end
+    catch ex
+        @error """
+            Exception when initialising CUDAdrv context.
+            This is not fatal, but CuArrays will not work.
+            """ ex
     end
 
     __init_memory__()
