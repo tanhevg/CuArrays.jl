@@ -101,7 +101,7 @@ function __init__()
         @error """
             Exception when initialising CUDAdrv context.
             This is not fatal, but CuArrays will not work.
-            """ ex
+            """ exception=ex
     end
 
     __init_memory__()
