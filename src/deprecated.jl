@@ -2,5 +2,10 @@
 
 import Base: @deprecate_binding
 
-@deprecate_binding BLAS CUBLAS
-@deprecate_binding FFT CUFFT
+if isdefined(CuArrays, CUBLAS)
+    @deprecate_binding BLAS CUBLAS
+end
+
+if isdefined(CuArrays, CUFFT)
+    @deprecate_binding FFT CUFFT
+end
