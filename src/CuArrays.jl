@@ -6,7 +6,7 @@ using CUDAdrv, CUDAnative
 
 using GPUArrays
 
-export CuArray, CuVector, CuMatrix, CuVecOrMat, cu, cuzeros, cuones, cufill
+export CuArray, CuVector, CuMatrix, CuVecOrMat, cu, cuzeros, cuones, cufill, cuda_initiaised
 
 import LinearAlgebra
 
@@ -43,6 +43,7 @@ include("gpuarray_interface.jl")
 # many libraries need to be initialized per-device (per-context, really, but we assume users
 # of CuArrays and/or CUDAnative only use a single context), so keep track of the active one.
 const active_context = Ref{CuContext}()
+const _cuda_initialised = Ref{Bool}(false)
 
 libcublas !== nothing   && include("blas/CUBLAS.jl")
 libcusparse !== nothing && include("sparse/CUSPARSE.jl")
@@ -94,6 +95,7 @@ function __init__()
     # a device might be active already
     try
         existing_ctx = CUDAdrv.CuCurrentContext()
+        _cuda_initialised[]=true
         if existing_ctx !== nothing
             active_context[] = existing_ctx
         end
@@ -107,5 +109,7 @@ function __init__()
     __init_memory__()
     __init_pool_()
 end
+
+cuda_initiaised() = _cuda_initialised[]
 
 end # module
