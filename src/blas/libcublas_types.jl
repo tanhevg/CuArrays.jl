@@ -92,7 +92,7 @@ const cublasXtPinningMemMode_t = UInt32
 const CUBLASXT_PINNING_DISABLED = 0
 const CUBLASXT_PINNING_ENABLED = 1
 
-if CUDAdrv.version() >= v"0.7.5"
+if check_cudadrv_version(v"0.7.5")
     # specify which GEMM algorithm to use in cublasGemmEx() (CUDA 7.5+)
     const cublasGemmAlgo_t = Int32
     const CUBLAS_GEMM_DFALT = -1

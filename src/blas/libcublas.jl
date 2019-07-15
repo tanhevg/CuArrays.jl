@@ -1837,7 +1837,7 @@ function cublasZtrttp(handle, uplo, n, A, lda, AP)
                handle, uplo, n, A, lda, AP)
 end
 
-if CUDAdrv.version() ≥ v"7.5"
+if check_cudadrv_version(v"7.5")
     # Wrap extensions of functions (ie. Nrm2Ex, GemmEx, etc) (CUDA 7.5+)
     function cublasNrm2Ex(handle, n, x, xType, incx, result, resultType, executionType)
         @check ccall((:cublasNrm2Ex, libcublas),

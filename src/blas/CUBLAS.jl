@@ -4,7 +4,7 @@ import CUDAdrv: CUDAdrv, CuContext, CuStream_t, CuPtr, PtrOrCuPtr, CU_NULL, devi
 import CUDAapi
 
 using ..CuArrays
-using ..CuArrays: libcublas, active_context, unsafe_free!
+using ..CuArrays: libcublas, active_context, unsafe_free!, check_cudadrv_version
 using LinearAlgebra
 
 include("libcublas_types.jl")
