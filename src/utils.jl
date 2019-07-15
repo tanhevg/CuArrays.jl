@@ -85,4 +85,4 @@ macro sync(ex)
     end
 end
 
-check_cudadrv_version(ver) = CUDAdrv.configured && CUDAdrv.version() >= ver
+check_cudadrv_version(ver) = CUDAdrv.configured && CUDAdrv.libcuda_version >= ver
